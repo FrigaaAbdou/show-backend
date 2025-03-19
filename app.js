@@ -10,10 +10,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(helmet());
-app.use(cors({
-  origin: 'https://test-depoly-app.netlify.app', // Allow only the frontend
-  credentials: true,
-}));
+app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

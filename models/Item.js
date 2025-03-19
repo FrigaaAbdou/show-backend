@@ -12,14 +12,14 @@ const ItemSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: function(value) {
-        if (!value) return true; // if empty, let it pass (or add required: true if necessary)
+      validator: function (value) {
+        if (!value) return true; // si vide, laisser passer (ou ajouter required: true si nécessaire)
         const wordCount = value.trim().split(/\s+/).length;
         return wordCount <= MAX_WORDS;
       },
-      message: props =>
-        `Full description must be at most ${MAX_WORDS} words, but got ${props.value ? props.value.trim().split(/\s+/).length : 0}.`
-    }
+      message: (props) =>
+        `La description doit contenir au maximum ${MAX_WORDS} mots, mais en contient ${props.value ? props.value.trim().split(/\s+/).length : 0}.`,
+    },
   },
   fullDescription: {
     type: String,
@@ -30,8 +30,12 @@ const ItemSchema = new mongoose.Schema({
   },
   imgLink: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
+  formationDate: {
+    type: Date,
+    required: true,
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Item', ItemSchema);
