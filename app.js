@@ -6,6 +6,9 @@ const helmet = require('helmet');
 
 const app = express();
 
+app.get('/item', (req, res) => {
+  res.send('item route works!');
+});
 
 // Middleware
 app.use(express.json());
