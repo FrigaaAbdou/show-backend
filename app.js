@@ -12,7 +12,22 @@ app.get('/item', (req, res) => {
 
 // Middleware
 app.use(express.json());
-app.use(helmet());
+const allowedOrigins = [
+  'https://cesi-app.netlify.app',                     // Production Netlify URL
+  'https://deploy-preview-2--cesi-app.netlify.app',   // Preview deploys
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (e.g. mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true, // Only if you're using cookies/auth
+}));
 app.use(cors());
 
 // Connect to MongoDB
